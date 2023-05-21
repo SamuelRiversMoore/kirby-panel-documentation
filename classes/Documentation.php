@@ -70,17 +70,17 @@ class Documentation
         }
     }
 
-    private static function handleFiles($html)
+    private static function handleFiles(string $html)
     {
-        $dom = new Dom;
-        $dom->loadStr($html);
-        foreach ($dom->find('img, a') as $node) {
+        $doc = new \DOMDocument;
+        $doc->loadHTML($html);
+        foreach ([...$doc->getElementsByTagName('img'), ...$doc->getElementsByTagName('a')] as $node) {
             if (($src = $node->getAttribute('src') ?? $node->getAttribute('href')) && F::exists(static::root($src))) {
                 $path = self::resolveFile(static::root($src));
                 $node->hasAttribute('src') ? $node->setAttribute('src', $path) : $node->setAttribute('href', $path);
             }
         }
-        return $dom->outerHtml;
+        return $doc->saveHTML();
     }
 
     private static function resolveFile($source)

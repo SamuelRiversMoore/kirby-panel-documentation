@@ -11,7 +11,6 @@
 		}
 	],
 	"require": {
-		"getkirby/composer-installer": "^1.1",
-		"paquettg/php-html-parser": "^3.1"
+		"getkirby/composer-installer": "^1.1"
 	}
 }
